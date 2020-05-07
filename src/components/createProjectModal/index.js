@@ -1,0 +1,132 @@
+import React, { useState, useEffect } from 'react'
+
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import MenuItem from '@material-ui/core/MenuItem';
+
+const CreateProjectModal = (props) => {
+  const initForm = {
+    name: '',
+    description: '',
+    baseLanguage: 'en'
+  }
+  const [formData, setFormData] = useState(initForm)
+  const [languageList, setLanguageList] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [isBlur, setIsBlur] = useState(false)
+
+  useEffect(()=>{
+    const tmp = [
+      {
+        value: 'en',
+        label: 'English(en)'
+      },
+      {
+        value: 'tw',
+        label: 'Chinese(tw)'
+      },
+      {
+        value: 'jp',
+        label: 'Japanese(jp)'
+      },
+    ]
+    setLanguageList(tmp);
+  },[])
+
+  const onChange = (event) => {
+    const { name, value } = event.target;
+    setFormData(prevState => ({ ...prevState, [name]: value }));
+  };
+
+  
+
+  function handleClickOpen() {
+    setOpen(true);
+  }
+
+  function handleClose(){
+    setOpen(false);
+  }
+
+  function onSave() {
+    props.onClick(formData)
+    setOpen(false);
+  }
+
+  function onBlur(){
+    setIsBlur(true);
+  }
+
+  function onFocus(){
+    setIsBlur(false)
+  }
+  
+  return (
+    <div>
+      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+        New Porject
+      </Button>
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Add Project</DialogTitle>
+        <DialogContent>
+          <TextField
+            name="name"
+            variant="outlined"
+            margin="dense"
+            id="name"
+            label="Project name"
+            fullWidth
+            value={formData.name}
+            onChange={onChange}
+            required
+          />
+          <TextField
+            name="description"
+            variant="outlined"
+            margin="dense"
+            id="description"
+            label="Description"
+            multiline
+            rows={3}
+            rowsMax={3}
+            fullWidth
+            value={formData.description}
+            onChange={onChange}
+          />
+          <TextField
+            name="baseLanguage"
+            variant="outlined"
+            id="baseLanguage"
+            margin="dense"
+            select
+            label="Select"
+            fullWidth
+            value={formData.baseLanguage}
+            onChange={onChange}
+            required
+          >
+            {languageList.map((el) => (
+              <MenuItem key={el.value} value={el.value}>
+                {el.label}
+              </MenuItem>
+            ))}
+          </TextField>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={onSave} color="primary">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  )
+}
+
+export default CreateProjectModal;

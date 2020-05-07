@@ -1,0 +1,17 @@
+[
+  {
+    "country": "us",
+    "code": "en",
+    "label": "English"
+  },
+  {
+    "country": "tw",
+    "code": "tw",
+    "label": "Chinese"
+  },
+  {
+    "country": "jp",
+    "code": "jp",
+    "label": "Japanese"
+  }
+]

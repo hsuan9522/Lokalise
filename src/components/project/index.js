@@ -2,27 +2,21 @@ import React, { useState, useEffect } from 'react'
 
 import LangBlock from './langBlock';
 import './index.scss';
-const Project = () =>{
+
+import languageList from '../../config/language.json';
+
+const Project = (props) =>{
   const [lang, setLang] = useState([]);
 
   useEffect(()=>{
-    const fakeLangData = [
-      {
-        title: 'english',
-        country: 'us'
-      },
-      {
-        title: 'japan',
-        country: 'jp'
-      }
-    ]
-    setLang(fakeLangData);
+    const baselang = languageList.find(el=>el.code==props.data.baseLanguage)
+    setLang([baselang]);
   }, [])
 
   return (
     <div className="row mt-4">
       <div className="col-3 border-right border-grey">
-        <h5 className="border-bottom border-grey py-1">Sample Project</h5>
+        <h5 className="border-bottom border-grey py-1">{props.data.name}</h5>
         <div className="row">
           <div className="col-6">
             <small>DONE</small>
