@@ -23,7 +23,14 @@ const App = () => {
         <CreateProjectModal onClick={onSave}></CreateProjectModal>
         {
           project.map(el=>{
-            return <Project data={el} key={el.name}></Project>
+            return (
+              <div key={el.name}>
+                <div className="py-3 my-3">
+                  <Project data={el}></Project>
+                </div>
+                <hr />
+              </div>
+            )
           })
         }
       </div>

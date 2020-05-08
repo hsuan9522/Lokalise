@@ -8,6 +8,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import languageList from '../../config/language.json';
+
 const CreateProjectModal = (props) => {
   const initForm = {
     name: '',
@@ -15,34 +17,17 @@ const CreateProjectModal = (props) => {
     baseLanguage: 'en'
   }
   const [formData, setFormData] = useState(initForm)
-  const [languageList, setLanguageList] = useState([]);
   const [open, setOpen] = useState(false);
-  const [isBlur, setIsBlur] = useState(false)
-
-  useEffect(()=>{
-    const tmp = [
-      {
-        value: 'en',
-        label: 'English(en)'
-      },
-      {
-        value: 'tw',
-        label: 'Chinese(tw)'
-      },
-      {
-        value: 'jp',
-        label: 'Japanese(jp)'
-      },
-    ]
-    setLanguageList(tmp);
-  },[])
+  const [isBlur, setIsBlur] = useState(false);
+  const [validation, setValidation] = useState({
+    name: null,
+    baseLanguage: null
+  })
 
   const onChange = (event) => {
     const { name, value } = event.target;
     setFormData(prevState => ({ ...prevState, [name]: value }));
   };
-
-  
 
   function handleClickOpen() {
     setOpen(true);
@@ -53,16 +38,19 @@ const CreateProjectModal = (props) => {
   }
 
   function onSave() {
+    let validateCount = 0;
+    for(let i in validation){
+      if (formData[i] == '') {
+        validateCount++;
+        setValidation(prevState => ({ ...prevState, [i]: true }));
+      }else{
+        setValidation(prevState => ({ ...prevState, [i]: false }));
+      }
+      if(validateCount>0) return false;
+    }
     props.onClick(formData)
     setOpen(false);
-  }
-
-  function onBlur(){
-    setIsBlur(true);
-  }
-
-  function onFocus(){
-    setIsBlur(false)
+    setFormData(initForm);
   }
   
   return (
@@ -71,7 +59,7 @@ const CreateProjectModal = (props) => {
         New Porject
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Add Project</DialogTitle>
+        <DialogTitle id="form-add-project">Add Project</DialogTitle>
         <DialogContent>
           <TextField
             name="name"
@@ -83,6 +71,7 @@ const CreateProjectModal = (props) => {
             value={formData.name}
             onChange={onChange}
             required
+            error={validation.name}
           />
           <TextField
             name="description"
@@ -110,8 +99,8 @@ const CreateProjectModal = (props) => {
             required
           >
             {languageList.map((el) => (
-              <MenuItem key={el.value} value={el.value}>
-                {el.label}
+              <MenuItem key={el.code} value={el.code}>
+                {el.label}({el.country})
               </MenuItem>
             ))}
           </TextField>
