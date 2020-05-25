@@ -1,5 +1,7 @@
 import React from 'react'
 
+import LoginModal from './loginModal'
+
 const Header = () =>{
   return(
     <div className="bg-light p-3 justify-content-between d-flex">
@@ -11,9 +13,12 @@ const Header = () =>{
         Menu
       </div>
       <div>
+        <LoginModal></LoginModal>
+      </div>
+      {/* <div>
         <i className="far fa-user-circle"></i>
         member
-      </div>
+      </div> */}
     </div>
   ) 
 }
