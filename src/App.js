@@ -1,40 +1,26 @@
 import React, {useState} from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import Header from './components/header';
-import CreateProjectModal from './components/createProjectModal';
-import Project from './components/project'
 
+import Project from './pages/project';
+import Home from './pages/home';
+import ProjectDetail from './pages/projectDetail';
 
 const App = () => {
-  const [project, setProject] = useState([]);
-
-  function onSave(val) {
-    const tmp = [...project];
-    tmp.push(val);
-    setProject(tmp);
-  }
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <Header></Header>
-      </header>
-      <div className="container my-4">
-        <CreateProjectModal onClick={onSave}></CreateProjectModal>
-        {
-          project.map(el=>{
-            return (
-              <div key={el.name}>
-                <div className="py-3 my-3">
-                  <Project data={el}></Project>
-                </div>
-                <hr />
-              </div>
-            )
-          })
-        }
+    <Router>
+      <div className="App">
+        <header className="App-header">
+          <Header></Header>
+        </header>
+        <Switch>
+          <Route path="/" exact component={Home}/>
+          <Route path="/project" exact component={Project} />
+          <Route path="/project/:id" component={ProjectDetail} />
+        </Switch>
       </div>
-    </div>
+    </Router>
   );
 }
 

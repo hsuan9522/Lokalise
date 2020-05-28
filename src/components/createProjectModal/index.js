@@ -18,7 +18,6 @@ const CreateProjectModal = (props) => {
   }
   const [formData, setFormData] = useState(initForm)
   const [open, setOpen] = useState(false);
-  const [isBlur, setIsBlur] = useState(false);
   const [validation, setValidation] = useState({
     name: null,
     baseLanguage: null

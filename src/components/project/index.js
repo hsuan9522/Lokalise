@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 
 import AddLang from './addLang';
 import LangBlock from './langBlock';
@@ -17,16 +18,17 @@ const Project = (props) =>{
   function addLanguage(val){
     let allLang =  [];
     val.forEach(e => {
-      const tmp = languageList.find(el => el.code == e)
+      const tmp = languageList.find(el => el.code === e)
       if(tmp) allLang.push(tmp);
     });
     setLang(allLang)
   }
-
   return (
     <div className="row">
       <div className="col-3 border-right border-grey">
-        <h4 className="border-bottom border-grey py-1">{props.data.name}</h4>
+        <Link to={`/project/${props.data.id}`}>
+          <h4 className="border-bottom border-grey py-1">{props.data.name}</h4>
+        </Link>
         <div className="row">
           <div className="col-6">
             <small>DONE</small>
