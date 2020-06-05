@@ -1,13 +1,15 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom';
 import LoginModal from './loginModal'
 
 const Header = () =>{
   return(
     <div className="bg-light p-3 justify-content-between d-flex">
       <div>
-        <i className="fas fa-heading"></i>
-        WebsiteName
+        <Link to={"/"} className="logo-btn">
+          <i className="fas fa-heading"></i>&ensp;
+           WebsiteName
+        </Link>
       </div>
       <div>
         Menu

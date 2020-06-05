@@ -1,3 +1,11 @@
+.logo-btn{
+  color: black;
+  text-decoration: none;
+  &:hover{
+    color: black;
+    text-decoration: none;
+  }
+}
 .flag-icon{
   border-radius: 6%;
   box-shadow: 1px 1px 3px grey;
